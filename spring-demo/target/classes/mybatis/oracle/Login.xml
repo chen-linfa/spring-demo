@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Login">
+	<select id="queryMenus" parameterType="Map" resultType="Map">
+		select s.* from sys_menu s 
+		where s.web_type = '0' and s.status_cd = '1000'
+		order by parent_id asc , order_id asc
+	</select>
+	
+	<select id="queryMap" parameterType="Map" resultType="Map">
+		select s.menu_url
+		from sys_menu s 
+		where s.menu_id = '1'
+	</select>
+	
+</mapper>

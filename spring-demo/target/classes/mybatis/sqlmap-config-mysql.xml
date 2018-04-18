@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="callSettersOnNulls" value="true"/> 
+       	<setting name="logImpl" value="SLF4J"/>
+       	<setting name="logPrefix" value="dao."/>
+	</settings>
+	
+	<typeAliases>
+		<package name="com.ztesoft.spring"></package>
+	</typeAliases>
+	
+	<plugins>
+		<plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+			<property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+		</plugin>
+		<plugin interceptor="com.ztesoft.spring.common.mybatis.StringInterceptor" />
+	</plugins>
+	
+	<mappers>
+		<mapper resource="mybatis/mysql/Login.xml" />
+	</mappers>
+</configuration>

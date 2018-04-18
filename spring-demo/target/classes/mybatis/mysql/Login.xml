@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Login">
+	<select id="queryMenus" parameterType="Map" resultType="Map">
+		select s.menu_id, s.parent_id, s.menu_name, s.menu_level, s.menu_url, s.menu_icon, 
+		s.show_type, s.can_close, s.order_id, s.path_code, s.path_name, s.comments, s.status_cd,
+		s.status_date, s.create_date, s.web_type, s.is_child_privilege, s.menu_view from sys_menu s 
+		where s.web_type = '0' and s.status_cd = '1000'
+		order by parent_id asc , order_id asc
+	</select>
+	
+	<select id="queryMap" parameterType="Map" resultType="Map">
+		select s.menu_url
+		from sys_menu s 
+		where s.menu_id = '1'
+	</select>
+	
+</mapper>

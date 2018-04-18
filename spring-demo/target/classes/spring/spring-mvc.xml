@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	
+	<!-- 开启controller注解支持 -->
+	<context:component-scan base-package="com.ztesoft.spring" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<mvc:annotation-driven />
+	
+	<!-- 开启AOP监、 使用cglib代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true" />
+		
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.CustomHandlerMapping">
+		<property name="order" value="-1" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.CustomHandlerAdapter">
+		<property name="order" value="-1" />
+		<property name="messageConverters">
+			<list>
+				<ref bean="json2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 自定义 json-HttpMessageConverter -->
+	<bean id="json2HttpMessageConverter" class="org.springframework.http.converter.json.CustomJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+<!-- 	
+	文件上传spring-mvc
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="104857600"></property>
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean> -->
+	
+</beans>
